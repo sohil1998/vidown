@@ -1,0 +1,33 @@
+{
+    "cli": {
+        "version": ">= 0.45.1"
+    },
+    "build": {
+        "development": {
+            "android": {
+                "buildType": "apk"
+            },
+            "ios": {
+                "cocoapods": "1.11.2"
+            },
+            "releaseChannel": "default",
+            "distribution": "internal",
+            "developmentClient": false
+        },
+        "preview": {
+            "distribution": "internal"
+        },
+        "production": {
+            "android": {
+                "buildType": "app-bundle"
+            },
+            "ios": {
+                "cocoapods": "1.11.2"
+            },
+            "releaseChannel": "production"
+        }
+    },
+    "submit": {
+        "production": {}
+    }
+}

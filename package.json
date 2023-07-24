@@ -1,0 +1,41 @@
+{
+  "name": "vidown",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "child_process": "^1.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "expo": "~48.0.18",
+    "expo-av": "^13.4.1",
+    "expo-file-system": "^15.3.0",
+    "expo-media-library": "^15.4.0",
+    "expo-sharing": "^11.5.0",
+    "expo-status-bar": "~1.4.4",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "instagram-private-api": "^1.45.3",
+    "mongoose": "^7.4.0",
+    "node-html-parser": "^6.1.5",
+    "qs": "^6.11.2",
+    "react": "18.2.0",
+    "react-native": "0.71.8",
+    "react-native-webview": "^13.2.2",
+    "react-native-ytdl": "^4.8.3",
+    "stream": "^0.0.2",
+    "ytdl-core": "^4.11.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
