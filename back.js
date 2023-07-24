@@ -97,7 +97,7 @@ app.get("/downloadIG", async (request, response) => {
   }
 });
 
-app.get("/api/hello", (req, res) => {
+app.get("/", (req, res) => {
   res.send("hello");
 });
 
