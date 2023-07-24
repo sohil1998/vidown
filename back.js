@@ -23,6 +23,7 @@ const getVideo = async (url) => {
 
     let videoString1 = contentUrl.replace(/\\/g, "");
     videoString = videoString1.replace(/u0025/g, "%");
+    console.log(videoString);
   } else {
     console.log("contentUrl not found in the HTML data");
   }

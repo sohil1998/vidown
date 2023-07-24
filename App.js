@@ -51,7 +51,8 @@ const VideoScreen = () => {
   }
 
   // const API_URL = `http://192.168.0.115:3000/download?url=https://www.youtube.com/watch?v=`;
-  const API_URL = `http://192.168.0.115:3000/`;
+  // const API_URL = `http://192.168.0.115:3000/`;
+  const API_URL = `https://vidown.onrender.com/`;
 
   const handleDownload1 = async (url) => {
     const youtubeURL = await url;
@@ -124,13 +125,14 @@ const VideoScreen = () => {
 
     const videoId = await textInput;
     let url = await `${API_URL}downloadIG?url=${videoId}`;
+    console.log(videoId);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         if (data.downloadLink) {
-          console.log(data.downloadLink);
           handleDownload1(data.downloadLink);
         } else {
+          console.log(data);
           Alert.alert("Error", "Invalid link or no video found.");
         }
       })
