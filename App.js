@@ -227,13 +227,13 @@ const styles = StyleSheet.create({
   downloadButton: {
     width: 150,
     height: 40,
-    backgroundColor: "#3498DB",
+    backgroundColor: "#fbd912",
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: "#000",
     fontSize: 16,
     fontWeight: "bold",
   },
