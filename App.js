@@ -12,6 +12,8 @@ import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
+import { Animation, Animation1 } from "./animation";
+import ReceiveSharingIntent from "react-native-receive-sharing-intent";
 
 const VideoScreen = () => {
   const [textInput, setTextInput] = useState(
@@ -24,17 +26,25 @@ const VideoScreen = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Example: Assume this is called when the app is opened with a deep link
     handleDeepLink();
   }, []);
 
-  const handleDeepLink = async () => {
-    const url = await Linking.getInitialURL();
+  const handleDeepLink = (url) => {
+    ReceiveSharingIntent.getReceivedFiles(
+      (files) => {
+        console.log(files);
+        // files returns as JSON Array example
+        //[{ filePath: null, text: null, weblink: null, mimeType: null, contentUri: null, fileName: null, extension: null }]
+      },
+      (error) => {
+        console.log(error);
+      },
+      "ShareMedia" // share url protocol (must be unique to your app, suggest using your apple bundle id)
+    );
 
-    if (url) {
-      console.log("Shared video URL:", url);
-      setTextInput(url);
-      // Now you can process the shared video URL as needed.
-    }
+    // To clear Intents
+    ReceiveSharingIntent.clearReceivedFiles();
   };
 
   const downloadProgressCallback = (progressEvent) => {
@@ -178,7 +188,8 @@ const VideoScreen = () => {
         /> */}
       {/* <Text></Text> */}
       {/* </View> */}
-      {textInput && (
+
+      {textInput && textInput.includes("https") && (
         <TouchableOpacity
           style={styles.downloadButton}
           onPress={() => {
@@ -195,6 +206,35 @@ const VideoScreen = () => {
             {loading ? "Downloading...." : "Download"}
           </Text>
         </TouchableOpacity>
+      )}
+      {loading ? (
+        <View style={{ height: 200, width: 200 }}>
+          <Animation />
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 18,
+            }}
+          >
+            Video Download Hone Tak Tu Mera Dance Dekh...
+          </Text>
+        </View>
+      ) : (
+        <>
+          {textInput.includes("https") ? null : (
+            <View style={{ height: 200, width: 200 }}>
+              <Animation1 />
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                Video ki link kaha hai...
+              </Text>
+            </View>
+          )}
+        </>
       )}
       {progress > 0 && (
         <Text>{`Download Progress: ${(progress * 100).toFixed(2)}%`}</Text>
