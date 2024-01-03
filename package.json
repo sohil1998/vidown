@@ -26,7 +26,6 @@
     "qs": "^6.11.2",
     "react": "18.2.0",
     "react-native": "0.71.8",
-    "react-native-receive-sharing-intent": "^2.0.0",
     "react-native-webview": "^13.2.2",
     "ytdl-core": "^4.11.5"
   },
