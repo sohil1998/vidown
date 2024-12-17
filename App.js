@@ -12,9 +12,12 @@ import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
 import { Animation, Animation1 } from "./animation";
+import axios from "axios";
 
 const VideoScreen = () => {
   const [textInput, setTextInput] = useState("");
+  const [InitialUrl, setInitialUrl] = useState("");
+
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -108,6 +111,65 @@ const VideoScreen = () => {
       });
   };
 
+  downloadFromRapidApiIG = async () => {
+    const options = {
+      method: "GET",
+      url: "https://instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com/get-info-rapidapi",
+      params: {
+        // url: "https://www.instagram.com/reel/C1U6tQLu1vv/",
+        url: textInput,
+      },
+      headers: {
+        "x-rapidapi-key": "d1756884bdmsh6e9604cfd54c70ap1456cdjsnd283df28cfad",
+        "x-rapidapi-host":
+          "instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com",
+      },
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data?.download_url);
+      handleDownload1(response.data?.download_url);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
+  downloadFromRapidApiYT = async () => {
+    const options = {
+      method: "POST",
+      url: "https://youtube-quick-video-downloader.p.rapidapi.com/api/youtube/links",
+      headers: {
+        "x-rapidapi-key": "d1756884bdmsh6e9604cfd54c70ap1456cdjsnd283df28cfad",
+        "x-rapidapi-host": "youtube-quick-video-downloader.p.rapidapi.com",
+        "Content-Type": "application/json",
+        "X-Forwarded-For": "70.41.3.18",
+      },
+      data: {
+        url: textInput,
+      },
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(JSON.stringify(response.data[0]?.urls[0].url));
+      handleDownload1(response.data[0]?.urls[0].url);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getUrl();
+  });
+
+  const getUrl = async () => {
+    const initialUrl = await Linking.getInitialURL();
+    console.log(initialUrl);
+    setInitialUrl(initialUrl);
+  };
   return (
     <View style={styles.container}>
       <TextInput
@@ -119,14 +181,20 @@ const VideoScreen = () => {
         }}
       />
 
+      <Text style={styles.buttonText}>{InitialUrl}</Text>
+
       {textInput && textInput.includes("https") && (
         <TouchableOpacity
           style={styles.downloadButton}
           onPress={() => {
+            setLoading(true);
             if (extractYouTubeVideoId(textInput)) {
-              handleDownload();
+              //handleDownload();
+              downloadFromRapidApiYT();
             } else if (textInput.includes("instagram")) {
-              handleDownloadIG();
+              // handleDownloadIG();
+              downloadFromRapidApiIG();
+              return;
             } else {
               alert("As of now we only have Youtube and Instagram feature");
             }
